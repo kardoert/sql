@@ -1,0 +1,48 @@
+UYGULAMA 
+TABLO OLUŞTURMA
+CREATE TABLE model(
+kod int primary key,
+agirlik int,
+yolcu_sayisi int
+);
+
+CREATE TABLE tur(
+kod int primary key,
+ad varchar(50)
+);
+
+CREATE TABLE arac(
+kod int primary key,
+ad varchar(50),
+stok int,
+turKod int,
+modelKod int,
+renk varchar(50),
+uretimTarihi date,
+saşi_no int,
+FOREIGN KEY (turkod) REFERENCES tur(kod),
+FOREIGN KEY (modelKod) REFERENCES model(kod)
+);
+
+CREATE TABLE tedarikci(
+kod int primary key,
+ad varchar(50),
+vergi_dairesi varchar(50),
+vergi_no int
+);
+
+CREATE TABLE malzeme(
+kod int primary key,
+ad varchar(50),
+stok int,
+tedarikci_kod int,
+FOREIGN KEY (tedarikci_kod) REFERENCES tedarikci(kod) 
+);
+
+CREATE TABLE arac_malzeme(
+arac_kod int ,
+malzeme_kod int,
+miktar int,
+FOREIGN KEY (arac_kod) REFERENCES arac(kod),
+FOREIGN KEY (malzeme_kod) REFERENCES malzeme(kod)
+);
