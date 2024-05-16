@@ -1,0 +1,25 @@
+
+SORGULAR
+select * from arac;
+--ağırlığı 2000 kgden fazla olan araçların model adlarını ve ağırlıkları listeleyin.
+select arac.ad , model.agirlik from arac,model where model.agirlik>=2000 and arac.modelKod=model.kod
+--lastik stok miktarı ve hangi tedarikçiden geldiğini gösterin.
+select malzeme.stok AS 'stok miktarı' ,tedarikci.ad AS 'tedarikcinin adı' from malzeme,tedarikci where tedarikci.kod=malzeme.tedarikci_kod 
+--minibüs türündeki araçların toplam sayısını bulun.
+select count(tur.ad) from tur,arac where tur.kod=arac.turKod and tur.ad='abc'
+--en çok stok miktarına sahip malzemeyi bulun.
+select max(malzeme.stok),malzeme.ad from malzeme GROUP BY malzeme.ad
+--araç-malzeme ilişki tablosunda , her aracın kullanılan toplam malzeme miktarını listeleyin.
+select sum(arac_malzeme.miktar),arac.ad from arac,arac_malzeme where
+arac.kod=arac_malzeme.arac_kod GROUP BY arac.ad
+--şasi numarası '11' olan aracın model adını ve rengini bulun.
+select arac.saşi_no,tur.ad,arac.renk from arac,tur where saşi_no=11 and tur.kod=arac.turKod
+--şasi numarası '22' olan aracın kulllanılan malzemeleri ve miktarlarını listeleyiniz.
+select arac.saşi_no AS 'ŞASİ NO',malzeme.ad AS 'KULLANILAN MALZEME ADI',arac_malzeme.miktar AS 'KULLANILAN MİKTAR' from malzeme,arac_malzeme,arac where arac.saşi_no=22 and arac.kod=arac_malzeme.arac_kod and malzeme.kod=arac_malzeme.malzeme_kod
+--bir aracın şasi numarası,model adı,üretim tarihi ve rengi nedir.
+--hangi aracın ağırlıkları 2000 kgden fazladır.
+select arac.saşi_no,tur.ad,arac.uretimTarihi,arac.renk from arac,tur where tur.kod=arac.turKod 
+--hangi aracın yolcu sayısı 5ten fazladır.
+select arac.ad as 'aracın adı',model.yolcu_sayisi as 'yolcu sayısı' from arac,model where yolcu_sayisi>5 and model.kod=arac.modelKod
+--bir aracın hangi malzemelerle ilişkili olduğunu bulun.
+select arac.ad as 'aracın adı',malzeme.ad as 'malzemenin adı' from arac,malzeme,arac_malzeme where arac.kod=arac_malzeme.arac_kod and malzeme.kod=arac_malzeme.malzeme_kod
