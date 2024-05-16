@@ -1,0 +1,38 @@
+VERİ EKLEME
+
+INSERT INTO model(kod,agirlik,yolcu_sayisi)
+VALUES 
+(11,1900,5),
+(22,2200,7),
+(33,1400,9);
+
+INSERT INTO tur(kod,ad)
+VALUES
+(109,'abc'),
+(208,'def'),
+(307,'ghj');
+
+INSERT INTO arac(kod,ad,stok,turKod,modelKod,renk,
+uretimTarihi,saşi_no)
+VALUES
+(1004,'a',15,109,11,'siyah','2020-04-03',11),
+(2005,'b',20,208,22,'beyaz','2022-01-16',22),
+(3006,'c',25,307,33,'sarı','2020-11-19',33);
+
+INSERT INTO tedarikci(kod,ad,vergi_dairesi,vergi_no)
+VALUES
+(10000,'x','x1',99),
+(20000,'y','y1',88),
+(30000,'z','z1',77);
+
+INSERT INTO malzeme(kod,ad,stok,tedarikci_kod)
+VALUES 
+(10111,'zx',42,1000),
+(20222,'zx',54,2000),
+(30333,'zx',76,3000);
+
+INSERT INTO arac_malzeme(arac_kod,malzeme_kod,miktar)
+VALUES 
+(1004,10111,36),
+(2005,20222,74),
+(3006,30333,52);
