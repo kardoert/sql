@@ -1,0 +1,31 @@
+--ziyaretçi aad soyad id ziyaretçi geri bildirimden tarihi alıyoruz
+create view ziyaretcibilgiler AS
+select Ziyaretciler.ad , Ziyaretciler.soyad,Ziyaretciler.ziyaretci_id ,Ziyaretler.tarih
+from Ziyaretciler  INNER JOIN  Ziyaretler On Ziyaretler.ziyaret_id=Ziyaretciler.ziyaretci_id
+select *from ziyaretcibilgiler
+
+--habitatlarda bulanan hayvanların listesi
+create view hayvanlarlistesi AS
+select Hayvanlar.hayvan_id,Hayvanlar.ad,Hayvanlar.tur,Hayvanlar.dogum_tarihi
+from Hayvanlar INNER JOIN Habitatlar on Habitatlar.habitat_id=Hayvanlar.hayvan_id
+select *from hayvanlarlistesi
+
+--veterilenlerin yaptığı ziyaretlerin sayısı
+create view ziyaretci_sayısı AS
+select count(ziyaretci_id) ,Veterinerler.ad
+from Veterinerler INNER JOIN Ziyaretciler on Ziyaretciler.ziyaretci_id=Veterinerler.veteriner_id group by Veterinerler.ad
+select *from ziyaretci_sayısı
+
+--her personelin görevi ve işe başlama tarihi
+select Personel.ad,Personel.gorev ,Personel.ise_baslama_tarihi
+from Personel 
+
+--her hayvan için ilgili bakıcı ve son bakım tarihi 
+select Hayvanlar.ad AS 'hayvanın adı' , Bakicilar.ad AS 'Bakıcının adı ',Bakimlar.tarih AS 'son bakım tarihi'
+from Hayvanlar,Bakicilar,Bakimlar
+where Hayvanlar.hayvan_id=Bakimlar.hayvan_id and Bakimlar.bakim_id=Bakicilar.bakici_id
+
+--etkinliklere katılan ziyaretcilerin listesi ve etkinlik adı ve bilet detayı
+select Ziyaretciler.ad as 'ziyaretci adı',Ziyaretciler.soyad as 'ziyaretci soyadı',Etkinlikler.ad 'etkinlik adı',Biletler.fiyat as 'bilet fiyatı'
+from Ziyaretciler,Etkinlikler,Biletler
+where Etkinlikler.etkinlik_id=Biletler.bilet_id and Biletler.bilet_id=Ziyaretciler. ziyaretci_id
