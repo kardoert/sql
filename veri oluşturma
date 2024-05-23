@@ -1,0 +1,120 @@
+--veri tabanı oluşturuldu
+CREATE TABLE Habitatlar (
+    habitat_id INT PRIMARY KEY ,
+    ad VARCHAR(100),
+    aciklama TEXT,
+    konum VARCHAR(100),
+    boyut VARCHAR(50)
+);
+
+CREATE TABLE Veterinerler (
+    veteriner_id INT PRIMARY KEY ,
+    ad VARCHAR(100),
+    soyad VARCHAR(100),
+    telefon VARCHAR(15),
+    eposta VARCHAR(100),
+    ise_baslama_tarihi DATE
+);
+
+CREATE TABLE Hayvanlar (
+    hayvan_id INT PRIMARY KEY ,
+    ad VARCHAR(100),
+    tur VARCHAR(100),
+    dogum_tarihi DATE,
+    cinsiyet VARCHAR(10),
+    gelis_tarihi DATE,
+    habitat_id INT,
+    FOREIGN KEY (habitat_id) REFERENCES Habitatlar(habitat_id)
+);
+
+CREATE TABLE Ziyaretler (
+    ziyaret_id INT PRIMARY KEY,
+    hayvan_id INT,
+    veteriner_id INT,
+    tarih DATE,
+    notlar TEXT,
+    FOREIGN KEY (hayvan_id) REFERENCES Hayvanlar(hayvan_id),
+    FOREIGN KEY (veteriner_id) REFERENCES Veterinerler(veteriner_id)
+);
+
+CREATE TABLE Bakicilar (
+    bakici_id INT PRIMARY KEY,
+    ad VARCHAR(100),
+    soyad VARCHAR(100),
+    telefon VARCHAR(15),
+    eposta VARCHAR(100),
+    ise_baslama_tarihi DATE
+);
+
+CREATE TABLE Bakimlar (
+    bakim_id INT PRIMARY KEY ,
+    hayvan_id INT,
+    bakici_id INT,
+    tarih DATE,
+    notlar TEXT,
+    FOREIGN KEY (hayvan_id) REFERENCES Hayvanlar(hayvan_id),
+    FOREIGN KEY (bakici_id) REFERENCES Bakicilar(bakici_id)
+);
+
+CREATE TABLE Ziyaretciler (
+    ziyaretci_id INT PRIMARY KEY ,
+    ad VARCHAR(100),
+    soyad VARCHAR(100),
+    telefon VARCHAR(15),
+    eposta VARCHAR(100),
+    ziyaret_tarihi DATE
+);
+
+CREATE TABLE Etkinlikler (
+    etkinlik_id INT PRIMARY KEY,
+    ad VARCHAR(100),
+    tarih DATE,
+    konum VARCHAR(100),
+    aciklama TEXT
+);
+
+CREATE TABLE Biletler (
+    bilet_id INT PRIMARY KEY ,
+    ziyaretci_id INT,
+    etkinlik_id INT,
+    fiyat DECIMAL(10, 2),
+    satin_alma_tarihi DATE,
+    FOREIGN KEY (ziyaretci_id) REFERENCES Ziyaretciler(ziyaretci_id),
+    FOREIGN KEY (etkinlik_id) REFERENCES Etkinlikler(etkinlik_id)
+);
+
+CREATE TABLE Tedarikciler (
+    tedarikci_id INT PRIMARY KEY,
+    ad VARCHAR(100),
+    telefon VARCHAR(15),
+    eposta VARCHAR(100),
+    adres TEXT
+);
+
+CREATE TABLE Urunler (
+    urun_id INT PRIMARY KEY ,
+    tedarikci_id INT,
+    ad VARCHAR(100),
+    kategori VARCHAR(50),
+    fiyat DECIMAL(10, 2),
+    stok_miktari INT,
+    FOREIGN KEY (tedarikci_id) REFERENCES Tedarikciler(tedarikci_id)
+);
+
+CREATE TABLE Personel (
+    personel_id INT PRIMARY KEY,
+    ad VARCHAR(100),
+    soyad VARCHAR(100),
+    telefon VARCHAR(15),
+    eposta VARCHAR(100),
+    gorev VARCHAR(100),
+    ise_baslama_tarihi DATE
+);
+
+CREATE TABLE Ziyaretci_Geri_Bildirim (
+    geri_bildirim_id INT PRIMARY KEY ,
+    ziyaretci_id INT,
+    tarih DATE,
+    geri_bildirim TEXT,
+    FOREIGN KEY (ziyaretci_id) REFERENCES Ziyaretciler(ziyaretci_id)
+);
